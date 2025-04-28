@@ -1,0 +1,112 @@
+1➔ To Create the Custom Object Task__c:
+Click on the gear icon (Setup) → Setup.
+In the left-hand search bar, type "Objects" and click "Object Manager".
+Click "Create" → "Custom Object".
+
+Fill:
+Label: Task
+Plural Label: Tasks
+Object Name: Task
+Record Name: Task Name
+
+Check Allow Reports and Allow Activities (optional).
+Save.
+
+Now, add custom fields:
+Description__c (Text Area)
+Due_Date__c (Date)
+Status__c (Picklist → Values: Not Started, In Progress, Completed)
+
+2➔ To Write Apex Class (Backend Logic):
+Click on the gear icon → Developer Console.
+Developer Console will open in a new window.
+Go to File → New → Apex Class.
+
+Name it: TaskManagerController
+Copy and Paste this code:
+
+public with sharing class TaskManagerController {
+
+    public static Id createTask(String name, String description, Date dueDate) {
+        Task__c newTask = new Task__c(
+            Name = name,
+            Description__c = description,
+            Due_Date__c = dueDate,
+            Status__c = 'Not Started'
+        );
+        insert newTask;
+        return newTask.Id;
+    }
+
+    public static void updateTask(Id taskId, String name, String description, Date dueDate) {
+        Task__c existingTask = [SELECT Id, Name, Description__c, Due_Date__c FROM Task__c WHERE Id = :taskId];
+        existingTask.Name = name;
+        existingTask.Description__c = description;
+        existingTask.Due_Date__c = dueDate;
+        update existingTask;
+    }
+
+    public static void markTaskCompleted(Id taskId) {
+        Task__c existingTask = [SELECT Id, Status__c FROM Task__c WHERE Id = :taskId];
+        existingTask.Status__c = 'Completed';
+        update existingTask;
+    }
+
+    public static List<Task__c> getAllTasks() {
+        return [SELECT Id, Name, Description__c, Due_Date__c, Status__c FROM Task__c ORDER BY Due_Date__c ASC];
+    }
+}
+Click "Save" (top left).
+
+3➔ To Create an Apex Trigger (Optional - Default Status):
+In Developer Console → File → New → Apex Trigger.
+
+Name it: TaskTrigger
+Choose Object: Task__c
+
+trigger TaskTrigger on Task__c (before insert) {
+    for (Task__c task : Trigger.new) {
+        if (task.Status__c == null) {
+            task.Status__c = 'Not Started';
+        }
+    }
+}
+Save.
+
+4➔ To Create the Apex Test Class (for Testing):
+In Developer Console → File → New → Apex Class.
+
+Name it: TaskManagerControllerTest
+
+@isTest
+public class TaskManagerControllerTest {
+
+    @isTest
+    static void testTaskOperations() {
+        Id taskId = TaskManagerController.createTask('Test Task', 'Test Description', Date.today().addDays(5));
+        System.assertNotEquals(null, taskId);
+
+        TaskManagerController.updateTask(taskId, 'Updated Task', 'Updated Description', Date.today().addDays(7));
+
+        TaskManagerController.markTaskCompleted(taskId);
+
+        List<Task__c> tasks = TaskManagerController.getAllTasks();
+        System.assert(tasks.size() > 0);
+    }
+}
+Save.
+
+5➔ Run the Test Class:
+In Developer Console, go to Test → New Run.
+Select TaskManagerControllerTest.
+Click Run.
+
+Wait for results: If it passes, your code is ready!
+
+🚀 Summary:
+
+Step	Navigation
+Custom Object	Setup → Object Manager → New Object
+Apex Class	Developer Console → File → New → Apex Class
+Apex Trigger	Developer Console → File → New → Apex Trigger
+Test Class	Developer Console → File → New → Apex Class (test code)
