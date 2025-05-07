@@ -1,0 +1,90 @@
+[5]:import pandas as pd
+import numpy as np
+[6]:
+  dict1={"Roll_No":[1,2,3,4,5]," Name":["Amol","Dipak","Shreya","Krisha","Pooja"], "Maths_marks":[60,70,80,90,np.nan], "English_marks":[70,80,90,np.nan,60], 
+  "Science_marks":[80,90,np.nan,60,70], "History_marks":[90,np.nan,60,70,80],"Geography_marks":[np.nan,60,70,80,90]}
+[7]: df1=pd.DataFrame(dict1)
+[8]: df1.isnull()
+[9]: df1.isnull().sum()
+[10]: df1.info()
+[11]: df1.fillna(0,inplace=True)
+    df1
+[12]: df1=pd.DataFrame(dict1)
+    df1
+[22]: dict1={"Roll_No":[1,2,3,4,5],"Name":
+["Amol","Dipak","Shreya","Krisha","Pooja"],"Maths_marks":[60,70,80,93,np.
+nan],"English_marks":[70,80,40,np.nan,50],"Science_marks":[80,91,np.
+nan,65,70],"History_marks":[76,np.nan,68,70,80],"Geography_marks":[np.
+nan,62,70,80,90]}
+df1=pd.DataFrame(dict1)
+df1
+[13]: # filling a null values using fillna()
+df1["Maths_marks"].fillna(45, inplace = True)
+df1["English_marks"].fillna(55, inplace = True)
+df1["Science_marks"].fillna(65, inplace = True)
+df1["History_marks"].fillna(75, inplace = True)
+df1["Geography_marks"].fillna(85, inplace = True)
+[14]: df1
+[15]: dict1={"Roll_No":[1,2,3,4,5],"Name":
+↪["Amol","Dipak","Shreya","Krisha","Pooja"],"Maths_marks":[60,70,80,93,np.
+↪nan],"English_marks":[70,80,40,np.nan,50],"Science_marks":[80,91,np.
+↪nan,65,70],"History_marks":[76,np.nan,68,70,80],"Geography_marks":[np.
+↪nan,62,70,80,90]}
+df1=pd.DataFrame(dict1)
+df1
+[33]: # filling a null values using fillna() as mean of colum
+df1["Maths_marks"].fillna(int(df1["Maths_marks"].mean()), inplace=True)
+[34]: df1
+[27]: dict1={"Roll_No":[1,2,3,4,5],"Name":
+↪["Amol","Dipak","Shreya","Krisha","Pooja"],"Maths_marks":[60,70,80,93,np.
+↪nan],"English_marks":[70,80,40,np.nan,50],"Science_marks":[80,91,np.
+↪nan,65,70],"History_marks":[76,np.nan,68,70,80],"Geography_marks":[np.
+↪nan,62,70,80,90]}
+df1=pd.DataFrame(dict1)
+df1
+[17]: df1.interpolate(method ='linear', limit_direction ='forward')
+[18]: dict1={"Roll_No":[1,2,3,4,5],"Name":
+↪["Amol","Dipak","Shreya","Krisha","Pooja"],"Maths_marks":
+↪[60,70,80,93,75],"English_marks":[70,80,40,np.nan,50],"Science_marks":
+↪[80,91,np.nan,65,70],"History_marks":[76,np.nan,68,70,80],"Geography_marks":
+↪[np.nan,62,70,80,90]}
+df1=pd.DataFrame(dict1)
+df1
+[26]: df1.dropna()
+[19]: dict1={"Roll_No":[1,2,3,4,5],"Name":
+↪["Amol","Dipak","Shreya","Krisha","Pooja"],"Maths_marks":[60,70,80,93,np.
+↪nan],"English_marks":[70,80,40,np.nan,50],"Science_marks":[80,91,np.
+↪nan,65,70],"History_marks":[76,np.nan,68,70,80],"Geography_marks":[np.
+↪nan,62,70,80,90]}
+df1=pd.DataFrame(dict1)
+df1
+[28]: # using dropna() function
+df1.dropna(how = 'all',inplace=True)
+[20]: dict1={"Roll_No":[1,2,3,4,5],"Name":
+↪["Amol","Dipak","Shreya","Krisha","Pooja"],"Maths_marks":[60,70,80,93,np.
+↪nan],"English_marks":[70,80,40,np.nan,50],"Science_marks":[80,91,np.
+↪nan,65,70],"History_marks":[76,np.nan,68,70,80],"Geography_marks":[np.
+↪nan,62,70,80,90]}
+df1=pd.DataFrame(dict1)
+df1
+[21]: # using dropna() function
+df1.dropna(axis = 1)
+[31]: dict1={"Roll_No":[1,2,3,4,5],"Name":
+↪["Amol","Dipak","Shreya","Krisha","Pooja"],"Maths_marks":[60,70,80,93,np.
+↪nan],"English_marks":[70,80,40,np.nan,50],"Science_marks":[80,91,np.
+↪nan,65,70],"History_marks":[76,np.nan,68,70,80],"Geography_marks":
+↪[60,62,70,80,90]}
+df1=pd.DataFrame(dict1)
+df1
+[22]: # making new data frame with dropped NA values
+df2 = df1.dropna(axis = 0, how ='any')
+[33]: df2
+[23]: dict1={"Roll_No":[1,2,3,4,5],"Name":
+↪["Amol","Dipak","Shreya","Krisha","Pooja"],"Maths_marks":[60,70,80,93,np.
+↪nan],"English_marks":[70,80,40,np.nan,50],"Science_marks":[80,91,np.
+↪nan,65,70],"History_marks":[76,np.nan,68,70,80],"Geography_marks":[np.
+↪nan,62,70,80,90]}
+df1=pd.DataFrame(dict1)
+df1
+
+
